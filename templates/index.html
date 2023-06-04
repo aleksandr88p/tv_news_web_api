@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>news generator</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='styles.css') }}">
+</head>
+<body>
+  <h1>Generating news summaries</h1>
+  <form id="generate-form">
+    <label for="days-input">Number of days:</label>
+    <input id="days-input" type="number" min="1" required>
+    <button type="submit">Generate</button>
+  </form>
+  <div id="results-container"></div>
+
+  <script src="{{ url_for('static', path='script.js') }}"></script>
+</body>
+</html>
