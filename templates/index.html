@@ -6,11 +6,14 @@
 </head>
 <body>
   <h1>Generating news summaries</h1>
-  <form id="generate-form">
-    <label for="days-input">Number of days:</label>
-    <input id="days-input" type="number" min="1" required>
-    <button type="submit">Generate</button>
-  </form>
+<form id="generate-form">
+  <label for="days-input">Number of days:</label>
+  <input id="days-input" type="number" name="days" min="1" required>
+  <label for="query-input">Custom query:</label>
+  <input id="query-input" type="text" name="query">
+  <button type="submit">Generate</button>
+</form>
+
   <div id="results-container"></div>
 
   <script src="{{ url_for('static', path='script.js') }}"></script>

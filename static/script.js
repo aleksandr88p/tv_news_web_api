@@ -1,6 +1,7 @@
 document.getElementById('generate-form').addEventListener('submit', function(event) {
   event.preventDefault();
   var days = document.getElementById('days-input').value;
+  var query = document.getElementById('query-input').value;
 
   // Display "Please wait, generating articles" message
   var loadingMessage = document.createElement('p');
@@ -13,12 +14,16 @@ document.getElementById('generate-form').addEventListener('submit', function(eve
   progressBar.setAttribute('max', '100');
   document.getElementById('results-container').appendChild(progressBar);
 
+  var formData = new URLSearchParams();
+  formData.append('days', days);
+  formData.append('query', query);
+
   fetch('/generate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: 'days=' + encodeURIComponent(days)
+    body: formData.toString()
   })
   .then(response => response.json())
   .then(data => {

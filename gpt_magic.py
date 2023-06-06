@@ -3,7 +3,7 @@ import random
 import openai
 from retrying import retry
 
-def generate_summary(api_key, article_groups):
+def generate_summary(api_key, article_groups, query=None):
     openai.api_key = api_key
     summaries = {}
 
@@ -12,9 +12,10 @@ def generate_summary(api_key, article_groups):
         shortest_article = min(group_articles, key=lambda x: len(x[1]))
         article_to_summarize, link = shortest_article[1], shortest_article[0]
 
-        query = "Summarize the following text in 3-8 sentences written a conversational, direct, casual, accessible, chatty and down-to-earth, but catered to insider industry professionals. Give it a catchy title (not in quotations) that includes important keywords and relevant emojis. Bold the most important phrases or key takeaways, write all important names in uppercase, and include emojis where relevant: \n"
+        default_query = "Summarize the following text in 3-8 sentences written a conversational, direct, casual, accessible, chatty and down-to-earth, but catered to insider industry professionals. Give it a catchy title (not in quotations) that includes important keywords and relevant emojis. Bold the most important phrases or key takeaways, write all important names in uppercase, and include emojis where relevant"
+        query = query if query else default_query
+        query += ': \n\n'
         prompt = query + article_to_summarize
-
         @retry(stop_max_attempt_number=3, wait_fixed=30 * 1000)  # Retry 3 times with a 30-second wait between attempts
         def request_summary():
             try:
