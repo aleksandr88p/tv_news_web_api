@@ -11,6 +11,8 @@ import datetime
 import json
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
+from some_functions import make_soup_here, find_top_by_platform, platforms_dict
+
 
 app = FastAPI()
 app.add_middleware(
@@ -37,10 +39,26 @@ table_names = ['deadline_film', 'deadline_tv', 'hollywoodreporter_movies_news',
                'variety_film_news', 'variety_tv_news']
 
 @app.get("/", response_class=HTMLResponse)
-async def read_item(request: Request):
+async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.post("/generate")
+@app.get("/news_digest")
+async def news_digest(request: Request):
+  return templates.TemplateResponse("news_digest.html", {"request": request})
+
+@app.get("/show_tops", response_class=HTMLResponse)
+def show_tops(request: Request):
+    return templates.TemplateResponse("show_tops.html", {"request": request})
+
+@app.get("/api/top_shows")
+def get_top_shows():
+    soup = make_soup_here()
+    data = find_top_by_platform(platform_dict=platforms_dict, soup=soup)
+    print(data)
+    return data
+
+
+@app.post("/news_digest/generate")
 async def generate(request: Request):
     form_data = await request.form()
     print("Starting to generate summaries...")

@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>news generator</title>
+  <title>Welcome</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='styles.css') }}">
 </head>
 <body>
-  <h1>Generating news summaries</h1>
-<form id="generate-form">
-  <label for="days-input">Number of days:</label>
-  <input id="days-input" type="number" name="days" min="1" required>
-  <label for="query-input">Custom query:</label>
-  <input id="query-input" type="text" name="query">
-  <button type="submit">Generate</button>
-</form>
-
-  <div id="results-container"></div>
-
-  <script src="{{ url_for('static', path='script.js') }}"></script>
+  <h1>Welcome to our website!</h1>
+  <nav>
+    <ul>
+      <li><a href="/news_digest">News Digest</a></li>
+      <li><a href="/show_tops">Show Tops</a></li>
+      <!-- Add more tabs as you add more features -->
+    </ul>
+  </nav>
 </body>
 </html>
