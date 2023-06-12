@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Box Office Summaries</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='styles.css') }}">
+</head>
+<body>
+  <h1>Box Office Summaries</h1>
+
+  <form id="date-selection-form">
+    <label for="article-count">Show last:</label>
+    <select id="article-count">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+    <button type="submit">article dates</button>
+  </form>
+<div id="date-buttons-container" class="date-buttons-container">
+  {% for date in last_dates %}
+    <button class="date-button" onclick="loadArticleSummary('{{ date }}')">{{ date }}</button>
+  {% endfor %}
+</div>
+
+
+  <div id="box-office-summary-container">
+    <p id="summary-text"></p>
+  </div>
+
+  <script src="{{ url_for('static', path='box_office.js') }}"></script>
+</body>
+</html>

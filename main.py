@@ -12,7 +12,7 @@ import json
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from some_functions import make_soup_here, find_top_by_platform, platforms_dict
-
+from box_office import connect_to_database, get_last_dates, get_article_by_date, generate_summary_BO
 
 app = FastAPI()
 app.add_middleware(
@@ -49,6 +49,30 @@ async def news_digest(request: Request):
 @app.get("/show_tops", response_class=HTMLResponse)
 def show_tops(request: Request):
     return templates.TemplateResponse("show_tops.html", {"request": request})
+
+@app.get("/box_office", response_class=HTMLResponse)
+async def box_office(request: Request):
+    return templates.TemplateResponse("box_office.html", {"request": request})
+
+
+
+@app.get("/api/box_office/{date}")
+async def get_box_office_summary(date: str):
+    # print(date)
+    conn = connect_to_database(db_host, db_user, db_password, db_name)
+
+    article = get_article_by_date(conn, date)
+    summary = generate_summary_BO(api_key=openai_api_key, article_content=article)
+    conn.close()
+
+    return {"summary": summary}
+
+@app.get("/api/box_office/dates/{count}")
+async def get_last_article_dates(count: int):
+    conn = connect_to_database(db_host, db_user, db_password, db_name)
+    last_dates = get_last_dates(count, conn)
+    conn.close()
+    return {"last_dates": last_dates}
 
 @app.get("/api/top_shows")
 def get_top_shows():

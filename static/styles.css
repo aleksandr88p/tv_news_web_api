@@ -71,3 +71,23 @@ progress {
 .show-type {
     font-weight: bold;
 }
+
+.date-buttons-container {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.date-button {
+  margin: 5px;
+}
+
+#box-office-summary-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px; /* Задайте высоту контейнера, чтобы текст отображался внутри него */
+  border: 1px solid #ccc; /* Добавьте рамку для создания квадрата */
+  padding: 20px;
+}

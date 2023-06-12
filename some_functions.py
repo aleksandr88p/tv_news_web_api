@@ -23,8 +23,9 @@ def make_soup_here():
         'Sec-Fetch-Site': 'none',
         'Sec-Fetch-User': '?1',
     }
-
-    response = requests.get(f'https://flixpatrol.com/top10/streaming/world/2023-0{week_number}/', headers=headers)
+    url = f'https://flixpatrol.com/top10/streaming/world/2023-0{week_number}/'
+    # print(url)
+    response = requests.get(url=url, headers=headers)
     soup = BeautifulSoup(response.text, 'lxml')
     return soup
 
