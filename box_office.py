@@ -63,8 +63,9 @@ def get_article_by_date(conn, article_date):
 def generate_summary_BO(api_key, article_content, query=None):
     openai.api_key = api_key
 
-    default_query = """Summarize this text in a direct, chatty tone. List in bullet points all the notable movies at the box office this past weekend mentioned in this text and summarize how they performed at the box office. Categorize each film under either the subheading "hit" or "flop" depending on how they performed. Bold film titles (without quotations) and include relevant emojis:\n\n"""
+    # default_query = """Summarize this text in a direct, chatty tone. List in bullet points all the notable movies at the box office this past weekend mentioned in this text and summarize how they performed at the box office. Categorize each film under either the subheading "hit" or "flop" depending on how they performed. Bold film titles (without quotations) and include relevant emojis:\n\n"""
 
+    default_query = """In bullet points, list all the notable movies mentioned in this text and for each one, summarize in 3-5 sentences how each one performed at the box office this past weekend in a direct and chatty tone. Include relevant emojis:\n\n"""
     full_query = f"{query}: \n\n" if query else default_query
     prompt = full_query + article_content
 
