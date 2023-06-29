@@ -40,7 +40,7 @@ def generate_summary(api_key, article_groups, query=None):
         summary = request_summary()
 
         if not summary:
-            summary = article_to_summarize  # Fall back to the original article if no summary was generated
+            summary = link  # Fall back to the original article if no summary was generated
 
         summaries[group_key] = summary
         print(f"\nSummary generated for {group_key} based on the article: {link}\n")
