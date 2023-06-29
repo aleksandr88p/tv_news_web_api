@@ -19,22 +19,23 @@ def generate_summary(api_key, article_groups, query=None):
         full_query = f"{query}: \n\n" if query else default_query
         full_query += ''
         prompt = full_query + article_to_summarize
-        @retry(stop_max_attempt_number=3, wait_fixed=30 * 1000)  # Retry 3 times with a 30-second wait between attempts
+        # @retry(stop_max_attempt_number=3, wait_fixed=30 * 1000)  # Retry 3 times with a 30-second wait between attempts
         def request_summary():
-            try:
-                print('***************************************')
-                print(f'from try, len promt is {len(prompt)}')
-                print(prompt)
-                response = openai.Completion.create(
-                    engine="text-davinci-003",
-                    prompt=prompt,
-                    temperature=0.4,
-                    max_tokens=500
-                )
-                return response.choices[0].text.strip()
-            except Exception as e:
-                print(f"Error generating summary for {group_key}: {e}")
-                raise  # Re-raise the exception to trigger a retry
+            for attempt in range(3):
+                try:
+                    print('***************************************')
+                    print(f'from try, len promt is {len(prompt)}')
+                    print(prompt)
+                    response = openai.Completion.create(
+                        engine="text-davinci-003",
+                        prompt=prompt,
+                        temperature=0.4,
+                        max_tokens=500
+                    )
+                    return response.choices[0].text.strip()
+                except Exception as e:
+                    print(f"Error generating summary for {group_key}: {e}")
+
 
         summary = request_summary()
 
